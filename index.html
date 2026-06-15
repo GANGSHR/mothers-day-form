@@ -192,6 +192,7 @@
     .date-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── 強化後的日期按鈕 ── */
   .date-btn {
     border: 2px solid var(--pale-dogwood-deep);
     border-radius: 16px;
@@ -212,6 +213,7 @@
     box-shadow: 0 4px 18px rgba(158,123,106,0.22);
     transform: translateY(-2px);
   }
+  /* 選中狀態：明顯的棕色背景 + 左側色條 + 勾勾 */
   .date-btn.selected {
     border-color: var(--brown-deep);
     border-width: 2.5px;
@@ -251,7 +253,9 @@
     margin-bottom: 6px;
     color: var(--text-dark);
   }
-  .date-btn.selected .date-main { color: var(--brown-deep); }
+  .date-btn.selected .date-main {
+    color: var(--brown-deep);
+  }
   .date-btn .date-time {
     font-size: 13px;
     color: var(--text-mid);
@@ -265,6 +269,7 @@
     margin-top: 4px;
     display: block;
   }
+  /* 選中時底部提示條 */
   .date-btn.selected::after {
     content: '已選擇';
     display: block;
@@ -944,6 +949,7 @@
     background: #E8A87C;
     flex-shrink: 0;
   }
+  /* 欄位錯誤紅框 */
   .field-input.field-error {
     border-color: #E0704A;
     background: #FFF8F5;
@@ -1031,7 +1037,9 @@
     margin-bottom: 12px;
     letter-spacing: 0.04em;
   }
-  .success-order-items { margin-bottom: 14px; }
+  .success-order-items {
+    margin-bottom: 14px;
+  }
   .success-order-item-row {
     display: flex;
     justify-content: space-between;
@@ -1051,7 +1059,10 @@
     font-weight: 600;
     color: var(--brown-deep);
   }
-  .success-total-amount { font-size: 18px; font-weight: 700; }
+  .success-total-amount {
+    font-size: 18px;
+    font-weight: 700;
+  }
 
   .success-payment-row {
     display: flex;
@@ -1164,7 +1175,7 @@
     border: 1px solid #F0C8B0;
   }
 
-  /* ── LOADING / ERROR ── */
+  /* ── LOADING INDICATOR ── */
   .loading-dates {
     text-align: center;
     padding: 20px;
@@ -1172,6 +1183,8 @@
     font-size: 14px;
     letter-spacing: 0.06em;
   }
+
+  /* ── ERROR MESSAGE ── */
   .load-error {
     text-align: center;
     padding: 24px;
@@ -1218,9 +1231,11 @@
   <!-- SECTION 1: DATE SELECTOR -->
   <div class="section-card">
     <div class="date-section-title"><span class="dot"></span>選擇自取日期</div>
+
     <div class="date-grid" id="dateGrid">
       <div class="loading-dates">載入庫存中⋯</div>
     </div>
+
     <div class="pickup-info-box">
       <div class="pickup-info-row">
         <span class="pickup-icon">📍</span>
@@ -1245,6 +1260,7 @@
       <li style="background:var(--pale-dogwood);border-radius:10px;padding:12px 14px;border-bottom:none;font-size:15px;font-weight:500;color:var(--brown-deep);margin-bottom:6px;"><span>🧊 鮮奶油蛋糕 <strong>僅限自取</strong>，請攜帶保冷袋＋保冷磚前往，取得後 <strong>20分鐘內</strong> 放入冷藏。</span></li>
       <li><span>填單後請於 <strong>24小時內</strong> 完成匯款，逾時視同放棄，以棄單論。</span></li>
       <li><span>每日製作量有限，額滿即提早關單。</span></li>
+      <li style="background:#FFF0E8;border-radius:10px;padding:12px 14px;border-bottom:none;border:1.5px solid #E8A87C;margin-bottom:6px;"><span style="color:#B5541A;font-weight:700;font-size:15px;">🚫 <strong>不受理更改自取日期、時間、尺寸、口味。</strong></span></li>
       <li><span>鮮奶油蛋糕<strong>無客製</strong>，不提供寫字、切片、更改口味/造型。</span></li>
       <li><span>賞味期：冷藏保存 <strong>2天</strong>（自取當日算第1天）。</span></li>
       <li><span>無提供一次性蛋糕刀叉盤，如有需求請加購。</span></li>
@@ -1265,10 +1281,12 @@
       <span>請先選擇自取日期，以繼續填寫</span>
     </div>
 
-    <!-- SECTION 3: PRODUCTS -->
+    <!-- SECTION 3: PRODUCTS（動態生成） -->
     <div class="section-card">
       <div class="section-label"><span class="dot"></span>選擇商品</div>
-      <div id="productsContainer"></div>
+      <div id="productsContainer">
+        <!-- 由 JS 動態注入 -->
+      </div>
     </div>
 
     <!-- SECTION 4: ADD-ONS -->
@@ -1312,6 +1330,7 @@
           </div>
           <div style="font-size:13px;color:var(--text-light);padding-left:2px;">螺旋蠟燭，長度約 6cm</div>
         </div>
+        <!-- 插牌 -->
         <div class="addon-row" style="flex-wrap:wrap; gap:10px; padding-bottom:14px; align-items:flex-start;">
           <div class="badge-section-label">🏷 插牌選擇</div>
           <div class="badge-grid">
@@ -1332,6 +1351,8 @@
     <!-- SECTION 5: ORDER SUMMARY -->
     <div class="section-card">
       <div class="section-label"><span class="dot"></span>訂單明細</div>
+
+      <!-- 自取日期顯示 -->
       <div class="summary-date-row" id="summaryDateRow">
         <span class="summary-date-icon">📅</span>
         <span class="summary-date-label">自取日期</span>
@@ -1339,6 +1360,7 @@
           <span class="summary-date-empty">尚未選擇日期</span>
         </span>
       </div>
+
       <div id="summaryContent">
         <div class="summary-empty">尚未選擇任何商品</div>
       </div>
@@ -1346,6 +1368,7 @@
         <span>合計</span>
         <span id="totalPrice">$0</span>
       </div>
+
     </div>
 
     <!-- SECTION 6: BUYER INFO -->
@@ -1367,6 +1390,7 @@
         <label class="field-label">FB / LINE 暱稱<span class="req">*</span></label>
         <input class="field-input" type="text" id="buyerNickname" placeholder="方便我們辨識您的私訊帳號">
       </div>
+
     </div>
 
     <!-- SECTION 7: REFUND POLICY -->
@@ -1417,6 +1441,7 @@
     請依照以下步驟完成後續流程。
   </p>
 
+  <!-- 步驟提示 -->
   <div class="success-steps">
     <div class="success-step">
       <div class="success-step-num">1</div>
@@ -1434,6 +1459,7 @@
     </div>
   </div>
 
+  <!-- 匯款時效警示 -->
   <div class="success-warn" style="background:linear-gradient(135deg,#FFE8DC,#FFD6C4);border:2px solid #E06030;color:#8B2800;font-size:15px;padding:18px 22px;box-shadow:0 3px 12px rgba(200,60,0,0.18);">
     ⏰ 請於 <strong>24小時內</strong> 完成匯款，超過時效視同放棄，訂單將列為無效並以棄單論。
   </div>
@@ -1454,11 +1480,15 @@
     <div class="success-card-title">🏦 匯款資訊</div>
     <div class="success-payment-row">
       <span class="success-payment-label">銀行</span>
-      <span class="success-payment-value">812（台新銀行）敦南分行</span>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span class="success-payment-value">812（台新銀行）敦南分行</span>
+      </div>
     </div>
     <div class="success-payment-row">
       <span class="success-payment-label">帳號</span>
-      <span class="success-payment-value success-account" id="accountDisplay">28881007328147</span>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span class="success-payment-value success-account" id="accountDisplay">28881007328147</span>
+      </div>
     </div>
     <div style="margin-top:10px;">
       <button class="copy-btn" style="width:100%;padding:10px 14px;font-size:14px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:6px;" onclick="copyAccount()">
@@ -1493,8 +1523,12 @@
   </div>
 
   <div class="contact-btns">
-    <a href="https://m.me/1463033500627955" target="_blank" class="contact-btn fb">💬 FB 私訊回報</a>
-    <a href="https://lin.ee/UoNQoWp" target="_blank" class="contact-btn line">💬 LINE 私訊回報</a>
+    <a href="https://m.me/1463033500627955" target="_blank" class="contact-btn fb">
+      💬 FB 私訊回報
+    </a>
+    <a href="https://lin.ee/UoNQoWp" target="_blank" class="contact-btn line">
+      💬 LINE 私訊回報
+    </a>
   </div>
 </div>
 
@@ -1502,25 +1536,35 @@
 <div class="modal-overlay" id="reviewModal" onclick="closeReviewModalOutside(event)">
   <div class="modal-box">
     <div class="modal-title">🔍 送出前，請確認您的訂購內容</div>
+
     <div class="modal-section">
       <div class="modal-section-title">自取日期</div>
       <div id="modalDate" style="font-size:15px;font-weight:700;color:var(--brown-deep);">—</div>
     </div>
+
     <div class="modal-section">
       <div class="modal-section-title">訂購品項</div>
       <div id="modalItems">—</div>
     </div>
+
     <div class="modal-section" id="modalBadgeSection">
       <div class="modal-section-title">插牌</div>
       <div id="modalBadge">—</div>
     </div>
+
     <div class="modal-section">
       <div class="modal-section-title">訂購人資訊</div>
       <div id="modalBuyerInfo">—</div>
     </div>
+
     <div class="modal-total-row">
       <span>訂單合計</span>
       <span id="modalTotal">$0</span>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#FFF0E4,#FFE4D0);border:2px solid #E07840;border-radius:12px;padding:14px 18px;margin-top:16px;font-size:13.5px;color:#8B3000;line-height:1.8;font-weight:500;">
+      🚫 <strong>訂單送出後不受理更改自取日期及訂購內容。</strong><br>
+      如尚未確認相關訂購細節，請點「返回修改」重新確認。
     </div>
     <div class="modal-btns">
       <button class="modal-cancel-btn" onclick="closeReviewModal()">← 返回修改</button>
@@ -1535,18 +1579,20 @@
 
 <script>
 // ══════════════════════════════════════════════════════
-// ★ 設定區
+// ★ 設定區（只需改這裡，每月不需動 HTML）
 // ══════════════════════════════════════════════════════
 const EMAILJS_SERVICE_ID  = 'service_7voasbi';
 const EMAILJS_TEMPLATE_ID = 'template_n6vus6s';
 const EMAILJS_PUBLIC_KEY  = 'Gz12-P0eutZoR1x4V';
 
+// Google Apps Script 部署 URL
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvwvlt6eHuihpecpRVaClXJpV4iHxcfp_AlSeGpnaAo4n65EyWcvkRC9WgCDzjXcTTcQ/exec';
 
+// 加購品項定價（固定，不從 Sheet 讀）
 const ADDON_PRICES = {
-  'a-fork':     { label: '刀叉組',    price: 30 },
-  'a-candle-l': { label: '蠟燭（長）', price: 20 },
-  'a-candle-s': { label: '蠟燭（短）', price: 10 },
+  'a-fork':    { label: '刀叉組',    price: 30 },
+  'a-candle-l':{ label: '蠟燭（長）', price: 20 },
+  'a-candle-s':{ label: '蠟燭（短）', price: 10 },
 };
 
 // ── 狀態變數 ──
@@ -1565,23 +1611,30 @@ async function loadSheetData() {
   try {
     const res  = await fetch(GOOGLE_SCRIPT_URL + '?t=' + Date.now());
     const json = await res.json();
+
     if (!json.ok) throw new Error('GAS 回傳失敗');
+
     sheetProducts = json.products || [];
     sheetDates    = json.dates    || [];
     dailyStock    = json.stock    || {};
 
     const addonProd = sheetProducts.find(p => p.key === 'addon' || p.key === '加購');
     if (addonProd && addonProd.img) {
-      const imgEl  = document.getElementById('addon-img');
+      const imgEl = document.getElementById('addon-img');
       const wrapEl = document.getElementById('addonImgWrap');
-      if (imgEl && wrapEl) { imgEl.src = addonProd.img; wrapEl.style.display = ''; }
+      if (imgEl && wrapEl) {
+        imgEl.src = addonProd.img;
+        wrapEl.style.display = '';
+      }
     }
+
   } catch(e) {
     console.warn('Sheet 資料讀取失敗', e);
     document.getElementById('dateGrid').innerHTML =
       '<div class="load-error">無法載入資料，請重新整理頁面。</div>';
     return;
   }
+
   renderProducts();
   renderDates();
 }
@@ -1592,6 +1645,7 @@ async function loadSheetData() {
 function renderProducts() {
   const container = document.getElementById('productsContainer');
   container.innerHTML = '';
+
   const mainProds = sheetProducts.filter(p => p.key !== 'addon' && p.key !== '加購');
 
   if (mainProds.length === 0) {
@@ -1618,6 +1672,7 @@ function renderProducts() {
       const slotKey = `${prod.key}_${size}`;
       const price   = prod.prices[size] || 0;
       const inputId = `qty_${slotKey}`;
+
       sizesHtml += `
         <div class="size-row" id="row_${slotKey}">
           <span class="size-label">${size}
@@ -1697,20 +1752,24 @@ function selectDate(dateObj, btn) {
   selectedDateKey = dateObj.dateKey;
 
   document.querySelectorAll('.qty-num').forEach(el => { el.value = 0; });
+
   applyDailyStock(dateObj.dateKey);
+
   document.getElementById('mainGate').classList.remove('locked');
 
+  // 更新訂單明細中的日期顯示
   const summaryDateValue = document.getElementById('summaryDateValue');
   if (summaryDateValue) {
     summaryDateValue.textContent = selectedDate;
     summaryDateValue.style.color = 'var(--brown-deep)';
     summaryDateValue.style.fontWeight = '700';
   }
+
   updateSummary();
 }
 
 // ══════════════════════════════════════════════════════
-// 套用庫存限制
+// 套用庫存限制到 UI
 // ══════════════════════════════════════════════════════
 function applyDailyStock(dateKey) {
   const dayStock = dailyStock[dateKey] || {};
@@ -1724,7 +1783,8 @@ function applyDailyStock(dateKey) {
     const ctrl = right.querySelector('.qty-control');
 
     const remain = dayStock.hasOwnProperty(slotKey)
-      ? Number(dayStock[slotKey]) : 99;
+      ? Number(dayStock[slotKey])
+      : 99;
 
     if (remain <= 0) {
       if (ctrl) ctrl.style.display = 'none';
@@ -1755,7 +1815,7 @@ function updatePlusBtn(input) {
 // 數量增減
 // ══════════════════════════════════════════════════════
 function changeQty(id, delta) {
-  const el = document.getElementById(id);
+  const el  = document.getElementById(id);
   if (!el) return;
   const max = parseInt(el.max) || 99;
   let v = parseInt(el.value) + delta;
@@ -1770,17 +1830,22 @@ function changeQty(id, delta) {
 // 插牌選擇
 // ══════════════════════════════════════════════════════
 function toggleBadge(btn) {
+  // 清除「不需要插牌」
   noBadgeSelected = false;
   const nob = document.querySelector('.badge-btn.no-badge');
   if (nob) { nob.classList.remove('selected'); nob.querySelector('.badge-check').textContent = ''; }
 
+  // 若點的是已選中的，則取消選取（允許反選）
   const isAlreadySelected = btn.classList.contains('selected');
+
+  // 清除所有插牌選項
   document.querySelectorAll('.badge-btn:not(.no-badge)').forEach(b => {
     b.classList.remove('selected');
     b.querySelector('.badge-check').textContent = '';
   });
   selectedBadges = [];
 
+  // 若原本沒選，則選取此項
   if (!isAlreadySelected) {
     btn.classList.add('selected');
     btn.querySelector('.badge-check').textContent = '✓';
@@ -1842,6 +1907,7 @@ function updateSummary() {
 
   document.getElementById('totalPrice').textContent = '$' + total.toLocaleString();
 
+  // 控制確認按鈕狀態 & 顯示驗證提示
   const consent     = document.getElementById('consentBox').checked;
   const badgeOk     = noBadgeSelected || selectedBadges.length > 0;
   const nameVal     = document.getElementById('buyerName').value.trim();
@@ -1849,6 +1915,7 @@ function updateSummary() {
   const emailVal    = document.getElementById('buyerEmail').value.trim();
   const nicknameVal = document.getElementById('buyerNickname').value.trim();
 
+  // 收集缺漏清單
   const missing = [];
   if (!selectedDate)  missing.push('尚未選擇自取日期');
   if (!hasItem)       missing.push('尚未選擇任何商品');
@@ -1859,6 +1926,7 @@ function updateSummary() {
   if (!nicknameVal)   missing.push('訂購人資訊：FB / LINE 暱稱');
   if (!consent)       missing.push('請勾選同意退貨退款政策');
 
+  // 欄位紅框
   const fields = {
     buyerName:     !nameVal,
     buyerPhone:    !phoneVal,
@@ -1872,6 +1940,7 @@ function updateSummary() {
     else        el.classList.remove('field-error');
   });
 
+  // 顯示或隱藏提示區塊
   const hintBox  = document.getElementById('validationHint');
   const hintList = document.getElementById('validationHintList');
   if (missing.length > 0) {
@@ -1886,21 +1955,27 @@ function updateSummary() {
 }
 
 // ══════════════════════════════════════════════════════
-// Review Modal
+// 確認訂購內容 Modal
 // ══════════════════════════════════════════════════════
 function openReviewModal() {
+  // 先跑一次驗證同步狀態
   updateSummary();
+
+  // 檢查是否有缺漏
   const hintBox = document.getElementById('validationHint');
   if (hintBox && hintBox.style.display !== 'none') {
     hintBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // 短暫閃爍提示
     hintBox.style.transition = 'box-shadow 0.2s';
     hintBox.style.boxShadow = '0 0 0 3px rgba(224,112,74,0.5)';
     setTimeout(() => { hintBox.style.boxShadow = ''; }, 600);
     return;
   }
 
+  // 填入日期
   document.getElementById('modalDate').textContent = selectedDate || '尚未選擇';
 
+  // 填入品項
   let itemsHtml = '';
   let total = 0;
 
@@ -1927,11 +2002,13 @@ function openReviewModal() {
 
   document.getElementById('modalItems').innerHTML = itemsHtml || '<span style="color:var(--text-light)">尚未選擇商品</span>';
 
+  // 插牌
   let badgeText = '尚未選擇';
-  if (noBadgeSelected)                badgeText = '不需要';
+  if (noBadgeSelected)               badgeText = '不需要';
   else if (selectedBadges.length > 0) badgeText = selectedBadges.join('、');
   document.getElementById('modalBadge').textContent = badgeText;
 
+  // 訂購人資訊
   const name     = document.getElementById('buyerName').value.trim();
   const phone    = document.getElementById('buyerPhone').value.trim();
   const nickname = document.getElementById('buyerNickname').value.trim();
@@ -1941,16 +2018,21 @@ function openReviewModal() {
     <div class="modal-item-row"><span>FB/LINE</span><span>${nickname || '—'}</span></div>
   `;
 
+  // 合計
   document.getElementById('modalTotal').textContent = '$' + total.toLocaleString();
+
   document.getElementById('reviewModal').classList.add('show');
 }
 
 function closeReviewModal() {
   document.getElementById('reviewModal').classList.remove('show');
 }
+
 function closeReviewModalOutside(e) {
   if (e.target === document.getElementById('reviewModal')) closeReviewModal();
 }
+
+// ── 政策折疊 ──
 function togglePolicy(el) {
   el.classList.toggle('open');
   el.nextElementSibling.classList.toggle('open');
@@ -1963,13 +2045,16 @@ document.addEventListener('DOMContentLoaded', () => {
   emailjs.init(EMAILJS_PUBLIC_KEY);
   loadSheetData();
   document.getElementById('consentBox').addEventListener('change', updateSummary);
+  // 訂購人資訊欄位即時驗證（blur 才標紅，input 即時更新提示）
   ['buyerName','buyerPhone','buyerEmail','buyerNickname'].forEach(function(id){
     const el = document.getElementById(id);
     el.addEventListener('input', updateSummary);
+    // 離開欄位後才顯示紅框
     el.addEventListener('blur', function() {
       if (!el.value.trim()) el.classList.add('field-error');
       else                  el.classList.remove('field-error');
     });
+    // 開始輸入就先移除紅框
     el.addEventListener('focus', function() {
       el.classList.remove('field-error');
     });
@@ -2001,35 +2086,31 @@ async function submitOrder() {
     return;
   }
 
-  const modalBtn  = document.getElementById('modalSubmitBtn');
+  const modalBtn = document.getElementById('modalSubmitBtn');
   const submitBtn = document.getElementById('submitBtn');
-  if (modalBtn)  { modalBtn.disabled = true;  modalBtn.textContent = '送出中，請稍候⋯'; }
+  if (modalBtn) { modalBtn.disabled = true; modalBtn.textContent = '送出中，請稍候⋯'; }
   if (submitBtn) submitBtn.disabled = true;
 
   const orderData = buildOrderData(name, phone, email, nickname);
   const ok = await sendToGoogleSheets(orderData);
 
   if (!ok) {
-    if (modalBtn)  { modalBtn.disabled = false; modalBtn.textContent = '確認無誤，送出訂單 →'; }
+    if (modalBtn) { modalBtn.disabled = false; modalBtn.textContent = '確認無誤，送出訂單 →'; }
     if (submitBtn) submitBtn.disabled = false;
     return;
   }
 
   sendEmailJS(orderData);
   closeReviewModal();
+
   populateSuccessScreen(orderData);
 
   document.getElementById('formArea').style.display = 'none';
   document.getElementById('successScreen').classList.add('show');
-
-  // ★ 修正：直接用 orderData 裡計算好的截止時間，確保與確認信一致
-  const deadlineEl = document.getElementById('payDeadline');
-  if (deadlineEl) deadlineEl.textContent = orderData.pay_deadline;
+  startCountdown();
 }
 
-// ══════════════════════════════════════════════════════
-// 組建訂單資料（★ 修正：加入 pay_deadline 計算）
-// ══════════════════════════════════════════════════════
+// ── 組建訂單資料 ──
 function buildOrderData(name, phone, email, nickname) {
   let total = 0;
   const quantities = {};
@@ -2043,6 +2124,7 @@ function buildOrderData(name, phone, email, nickname) {
     const [prodKey, size] = slotKey.split('_');
     const prod = sheetProducts.find(p => p.key === prodKey);
     const label = prod ? `${prod.name} ${size}` : slotKey;
+
     quantities[slotKey] = qty;
     orderItems.push({ label, qty, price, sub: qty * price });
     total += qty * price;
@@ -2058,42 +2140,22 @@ function buildOrderData(name, phone, email, nickname) {
   });
 
   let badgeText = '無';
-  if (noBadgeSelected)                badgeText = '不需要';
+  if (noBadgeSelected)               badgeText = '不需要';
   else if (selectedBadges.length > 0) badgeText = selectedBadges.join('、');
 
   const itemLines = orderItems.map(it => `${it.label} ×${it.qty}  $${it.sub.toLocaleString()}`);
 
-  // ★ 修正：計算匯款截止時間
-  const _now = new Date();
-  const _pad = n => String(n).padStart(2, '0');
-  let _deadline;
-  if (_now.getHours() === 0) {
-    _deadline = new Date(_now);
-    _deadline.setDate(_deadline.getDate() + 1);
-    _deadline.setHours(23, 59, 0, 0);
-  } else {
-    const _plus24   = new Date(_now.getTime() + 24 * 60 * 60 * 1000);
-    const _next2359 = new Date(_now);
-    _next2359.setDate(_next2359.getDate() + 1);
-    _next2359.setHours(23, 59, 0, 0);
-    _deadline = _plus24 < _next2359 ? _plus24 : _next2359;
-  }
-  const payDeadlineStr =
-    `${_deadline.getFullYear()}/${_pad(_deadline.getMonth()+1)}/${_pad(_deadline.getDate())} ` +
-    `${_pad(_deadline.getHours())}:${_pad(_deadline.getMinutes())}`;
-
   return {
-    timestamp:    new Date().toLocaleString('zh-TW'),
-    date:         selectedDate,
-    dateKey:      selectedDateKey,
+    timestamp:  new Date().toLocaleString('zh-TW'),
+    date:       selectedDate,
+    dateKey:    selectedDateKey,
     email, name, phone, nickname,
     quantities,
     orderItems,
-    badges:       badgeText,
-    addonText:    addonItems.join('、') || '',
-    total:        '$' + total.toLocaleString(),
-    order_items:  itemLines.join('\n') || '（無）',
-    pay_deadline: payDeadlineStr,  // ★ 修正：新增
+    badges:     badgeText,
+    addonText:  addonItems.join('、') || '',
+    total:      '$' + total.toLocaleString(),
+    order_items: itemLines.join('\n') || '（無）',
   };
 }
 
@@ -2121,7 +2183,7 @@ async function sendToGoogleSheets(data) {
 }
 
 // ══════════════════════════════════════════════════════
-// EmailJS（★ 修正：補傳 pay_deadline）
+// EmailJS 寄送確認信
 // ══════════════════════════════════════════════════════
 async function sendEmailJS(data) {
   try {
@@ -2134,7 +2196,6 @@ async function sendEmailJS(data) {
       order_items:    data.order_items,
       order_badges:   data.badges,
       order_total:    data.total,
-      pay_deadline:   data.pay_deadline,  // ★ 修正：新增
     });
   } catch(e) {
     console.warn('EmailJS 寄送失敗（不影響訂單）:', e);
@@ -2145,9 +2206,11 @@ async function sendEmailJS(data) {
 // 填入成功頁訂單摘要
 // ══════════════════════════════════════════════════════
 function populateSuccessScreen(data) {
+  // 日期
   const dateEl = document.getElementById('successOrderDate');
   if (dateEl) dateEl.textContent = '📅 自取日期：' + data.date;
 
+  // 品項列表
   const itemsEl = document.getElementById('successOrderItems');
   if (itemsEl) {
     let html = '';
@@ -2159,15 +2222,23 @@ function populateSuccessScreen(data) {
     });
     if (data.badges && data.badges !== '無') {
       html += `<div class="success-order-item-row">
-        <span>🏷 插牌：${data.badges}</span><span></span>
+        <span>🏷 插牌：${data.badges}</span>
+        <span></span>
       </div>`;
     }
-    itemsEl.innerHTML = html || '<div style="color:var(--text-light);font-size:14px;">（無商品）</div>';
-  }
+    if (data.remit) {
+      html += `<div class="success-order-item-row" style="color:var(--brown);font-weight:600;">
+        <span>💳 匯款末五碼</span>
+        <span>${data.remit}</span>
+      </div>`;
+    }
+    itemsEl.innerHTML = html || '<div style="color:var(--text-light);font-size:14px;">（無商品）</div>';  }
 
+  // 合計
   const totalEl = document.getElementById('successOrderTotal');
   if (totalEl) totalEl.textContent = data.total;
 
+  // 匯款金額
   const payEl = document.getElementById('successPayAmount');
   if (payEl) payEl.textContent = data.total;
 }
@@ -2200,6 +2271,42 @@ function copyAccount() {
       setTimeout(() => label.textContent = '📋 一鍵複製：銀行代碼 812 ＋ 帳號 28881007328147', 2500);
     }
   });
+}
+
+// ══════════════════════════════════════════════════════
+// 顯示匯款截止時間 ＆ 倒數
+// ══════════════════════════════════════════════════════
+function startCountdown() {
+  const now = new Date();
+  let deadline;
+
+  // 若下單時間在 00:00 ~ 00:59（凌晨），截止為「下單日+1天」的 23:59
+  // 否則截止為「下單時間 + 24 小時」，但若超過 23:59 則取當天 23:59
+  const hour = now.getHours();
+  const min  = now.getMinutes();
+
+  if (hour === 0) {
+    // 凌晨 00:00 ~ 00:59 下單 → 隔日 23:59
+    deadline = new Date(now);
+    deadline.setDate(deadline.getDate() + 1);
+    deadline.setHours(23, 59, 0, 0);
+  } else {
+    // 其他時間：下單 +24h，若超過當日 23:59 則 cap 為次日 23:59
+    const plus24 = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+    // 計算當天（下單日+1）的 23:59
+    const nextDay2359 = new Date(now);
+    nextDay2359.setDate(nextDay2359.getDate() + 1);
+    nextDay2359.setHours(23, 59, 0, 0);
+    // 取較早者（正常情況下 +24h < 次日23:59，除非很晚下單）
+    deadline = plus24 < nextDay2359 ? plus24 : nextDay2359;
+  }
+
+  const pad = n => String(n).padStart(2, '0');
+  const deadlineStr =
+    `${deadline.getFullYear()}/${pad(deadline.getMonth()+1)}/${pad(deadline.getDate())}　` +
+    `${pad(deadline.getHours())}:${pad(deadline.getMinutes())}`;
+  const deadlineEl = document.getElementById('payDeadline');
+  if (deadlineEl) deadlineEl.textContent = deadlineStr;
 }
 </script>
 </body>
